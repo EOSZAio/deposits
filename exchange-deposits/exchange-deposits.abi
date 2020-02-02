@@ -1,0 +1,174 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT ",
+    "version": "eosio::abi/1.1",
+    "types": [],
+    "structs": [
+        {
+            "name": "addwhitelist",
+            "base": "",
+            "fields": [
+                {
+                    "name": "contract",
+                    "type": "name"
+                },
+                {
+                    "name": "minimum_deposit",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "cleardeposit",
+            "base": "",
+            "fields": [
+                {
+                    "name": "symbol",
+                    "type": "symbol_code"
+                },
+                {
+                    "name": "deposit_id",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "deposit",
+            "base": "",
+            "fields": [
+                {
+                    "name": "deposit_id",
+                    "type": "uint64"
+                },
+                {
+                    "name": "timestamp",
+                    "type": "time_point_sec"
+                },
+                {
+                    "name": "from",
+                    "type": "name"
+                },
+                {
+                    "name": "quantity",
+                    "type": "asset"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
+                },
+                {
+                    "name": "block_num",
+                    "type": "uint64"
+                },
+                {
+                    "name": "trxid",
+                    "type": "checksum256"
+                }
+            ]
+        },
+        {
+            "name": "refund",
+            "base": "",
+            "fields": [
+                {
+                    "name": "symbol",
+                    "type": "symbol_code"
+                },
+                {
+                    "name": "deposit_id",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "removewlist",
+            "base": "",
+            "fields": [
+                {
+                    "name": "symbol",
+                    "type": "symbol_code"
+                }
+            ]
+        },
+        {
+            "name": "setwhitelist",
+            "base": "",
+            "fields": [
+                {
+                    "name": "symbol",
+                    "type": "symbol_code"
+                },
+                {
+                    "name": "enabled",
+                    "type": "bool"
+                }
+            ]
+        },
+        {
+            "name": "whitelist",
+            "base": "",
+            "fields": [
+                {
+                    "name": "deposit_num",
+                    "type": "uint64"
+                },
+                {
+                    "name": "contract",
+                    "type": "name"
+                },
+                {
+                    "name": "minimum_deposit",
+                    "type": "asset"
+                },
+                {
+                    "name": "enabled",
+                    "type": "bool"
+                }
+            ]
+        }
+    ],
+    "actions": [
+        {
+            "name": "addwhitelist",
+            "type": "addwhitelist",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "cleardeposit",
+            "type": "cleardeposit",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "refund",
+            "type": "refund",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "removewlist",
+            "type": "removewlist",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "setwhitelist",
+            "type": "setwhitelist",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [
+        {
+            "name": "deposits",
+            "type": "deposit",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "whitelists",
+            "type": "whitelist",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [],
+    "variants": []
+}

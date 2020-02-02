@@ -30,3 +30,17 @@
 *.exe
 *.out
 *.app
+
+# Mac stuff
+.DS_Store
+
+# C Lion
+.idea
+
+# nodeos
+scripts/nodeos/nodeos.log
+scripts/nodeos/nodeos.pid
+scripts/nodeos/nodeos.tty
+scripts/nodeos/data
+scripts/nodeos/protocol_features
+
