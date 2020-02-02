@@ -21,31 +21,43 @@ The contract intercepts transfer notification events on it's host account, valid
 
 ### addwhitelist ["contract", "minimum_deposit"]
 
-Add a token to the deposits account whitelist.
+This action adds a token to the deposits account whitelist. It requires the following parameters;
+* contract - the token contract account, eg. "eosio.token" for TLOS
+* minimum_deposit - the minimum allowed deposit. eg. "10.0000 TLOS" for TLOS
 
 ### setwhitelist ["symbol", "enabled"]
 
-Enable / disable receipt of deposits for a specified token.
+This action enables / disables deposits for a specified token. If deposits are disabled all transfers to the deposit account will fail. It requires the following parameters;
+* symbol - Token symbok, eg. "TLOS"
+* enabled - 1 (enabled) / 0 (disabled)
 
 ### removewlist ["symbol"]
 
-Permenently remove a token from the whitelist.
+This action permenently remove a token from the whitelist. It requires the following parameter;
+* symbol - Token symbol, eg. "TLOS"
 
 ### cleardeposit ["symbol", "deposit_id"]
 
-Clear a deposit record from the deposits table.
+This action clears a deposit record from the deposits table. The deposit records for each whitelisted token are stored in their own scope (partitioned by token code). A deposit record is identified by symbol and deposit_id;
+* symbol - Token symbol, eg. "TLOS"
+* deposit_id - Autoincremented deposit id automatically added to the deposit record on creation
 
 ### refund ["symbol", "deposit_id"]
 
-Reverse the deposit transaction, returning tokens to the account that sent them.
+This action reverses a deposit transaction, returning tokens to the account that sent them. The deposit records for each whitelisted token are stored in their own scope (partitioned by token code). A deposit record is identified by symbol and deposit_id;
+* symbol - Token symbol, eg. "TLOS"
+* deposit_id - Autoincremented deposit id automatically added to the deposit record on creation
 
 ## Whitelist table structure
 
+This contract only accepts deposits from whitelisted tokens. The whitelist table is also used to store the deposit id autoincrement counter and to enable / disable depisits.
+
 | Field | Type | Description |
 | --- |:---:| ---|
-| deposit_num | uint64_t |  |
-| contract | name |  |
-| minimum_deposit | asset |  |
+| deposit_num | uint64_t | An autoincrement counter used to populate the deposit id of the deposit record for this token |
+| contract | name | The contract account of the token |
+| minimum_deposit | asset | The minimum value and symbol of the whitelisted token |
+| enabled | bool | Token deposits enabled (1) or disabled (0) |
 
 ## Deposit table structure
 
@@ -63,7 +75,7 @@ The deposits table is created using the deposits account as the table code and t
 
 ## How to deploy the contract
 
-Outstanding
+Still to be completed.
 
 ## How to use the contract
 
@@ -86,7 +98,7 @@ DEPOSITS="your deposit account name"
 TOKENSYMBOL="your token symbol"
 cleos get table $DEPOSITS $TOKENSYMBOL deposits
 ```
-example
+**example**
 ```commandline
 $ cleos get table deposits deposits whitelists
 
@@ -108,7 +120,7 @@ DEPOSITS="your deposit account name"
 TOKENSYMBOL="your token symbol"
 cleos get table $DEPOSITS $TOKENSYMBOL deposits
 ```
-example
+**example**
 ```commandline
 $ cleos get table deposits TLOS deposits
 
