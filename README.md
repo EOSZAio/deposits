@@ -75,7 +75,26 @@ The deposits table is created using the deposits account as the table code and t
 
 ## How to deploy the contract
 
-Still to be completed.
+Simple guidelines on deploying the exchange-deopsits contract are included below. A detailed description on how to deploy a smart contract can be found on the EOSIO developer portal (https://developers.eos.io). Please consult the EOSIO developer potral if the information you are looking for is not on this page.
+
+1 - Download and install the latest version of EOSIO CDT.
+
+2 - Compile the contract by executing the following command from the folder containing this README folder.
+```commandline
+eosio-cpp -abigen -I exchange-deposits/include -contract $contract -o exchange-deposits/exchange-deposits.wasm exchange-deposits/src/exchange-deposits.cpp
+```
+3 - Prepare your deposits account
+* You will require 300 kbytes of RAM on your deposits account to deploy this contract. You should provision additional RAM to hold deposits table records. The most convenient way to manage your account RAM is through the bloks.io website (https://telos.bloks.io/wallet/ram/buy)
+* Add the eosio.code permission to active permission of your deposits account. This is required to allow the contract to initiate contract actions. The modification can be made by executing the following cleos commend.
+```commandline
+DEPOSITS="your Telos account"
+cleos set account permission ${DEPOSITS} active --add-code
+```
+4 - Deploy the contract
+```commandline
+DEPOSITS="your Telos account"
+cleos set contract $DEPOSITS ./exchange-deposits
+```
 
 ## How to use the contract
 
@@ -148,3 +167,5 @@ $ cleos get table deposits TLOS deposits
 ```
 
 ### Clear a deposit record
+
+Deposits table rows consume account RAM. This ram can be recovered by removing rows once they are no longer needed. Rows are remover by ...
