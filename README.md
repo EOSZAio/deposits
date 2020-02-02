@@ -1,4 +1,4 @@
-# exchange-deposits
+# Telos deposits
 
 ## Overview
 
