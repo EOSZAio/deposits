@@ -5,6 +5,7 @@ source ~/.bash_profile
 GREEN='\033[0;32m'
 NC='\033[0m'
 
+# Edit this path to point to the folder holding the exchange-deposits contract
 MY_CONTRACTS_ROOT=~/TCD/exchange-deposits
 
 declare -a contracts=("exchange-deposits")

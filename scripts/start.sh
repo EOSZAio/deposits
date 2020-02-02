@@ -1,5 +1,6 @@
 #!/bin/bash
 
+# Edit this path to hold the absolute path to the scripts folder. Nodeos won't run correctly if a absolute path is not specified
 HOME=/Users/rory/TCD/exchange-deposits/scripts
 NODEOS=$HOME/nodeos
 DATADIR=$NODEOS/data
