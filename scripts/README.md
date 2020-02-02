@@ -10,6 +10,35 @@ This contract provides an alternative approach to receiving deposits. When deplo
 
 The contract intercepts transfer notification events on it's host account, validates the transfer details and writes the details to a deposits table. The table resides in memory which is billed to the host account. Actions are provided to manage which deposits are accepted and to free up account memory as records are no longer needed in the table. The account will not be able to accept deposits if all RAM allocated to the account is consumed.
 
+## Features
+
+* Only accept deposits of whitelisted tokens. A minimum limit can be set on whitelisted tokens preventing the account from being spammed by small transactions. Deposits below the minimum limit wo whitelisetd tokens and non-whitelisted tokens are rejected.
+* The contract can be used to receive multiple Telos tokens in the same account. Each token has its own deposits table.
+* The deposits table consumes 199 bytes of RAM per row. Over time it will become necessary to release this RAM. Once deposits are processed by downstream processes they can be removed from the deposits table, freeing up RAM for new deposits.
+* The contract can refund a deposit if the recipient chooses not to receive it. The tokens are refunded to the account who originally sent them.
+
+## Actions
+
+### addwhitelist ["contract", "minimum_deposit"]
+
+Add a token to the deposits account whitelist.
+
+### setwhitelist ["symbol", "enabled"]
+
+Enable / disable receipt of deposits for a specified token.
+
+### removewlist ["symbol"]
+
+Permenently remove a token from the whitelist.
+
+### cleardeposit ["symbol", "deposit_id"]
+
+Clear a deposit record from the deposits table.
+
+### refund ["symbol", "deposit_id"]
+
+Reverse the deposit transaction, returning tokens to the account that sent them.
+
 ## Whitelist table structure
 
 | Field | Type | Description |
@@ -31,13 +60,6 @@ The deposits table is created using the deposits account as the table code and t
 | memo | string | The original transfer memo |
 | block_num | uint64_t | The block containing the deposit transfer transaction |
 | trxid | checksum256 | The transaction id (hash) of the deposits transfer transaction |
-
-## Features
-
-* Only accept deposits of whitelisted tokens. A minimum limit can be set on whitelisted tokens preventing the account from being spammed by small transactions. Deposits below the minimum limit wo whitelisetd tokens and non-whitelisted tokens are rejected.
-* The contract can be used to receive multiple Telos tokens in the same account. Each token has its own deposits table.
-* The deposits table consumes 199 bytes of RAM per row. Over time it will become necessary to release this RAM. Once deposits are processed by downstream processes they can be removed from the deposits table, freeing up RAM for new deposits.
-* The contract can refund a deposit if the recipient chooses not to receive it. The tokens are refunded to the account who originally sent them.
 
 ## How to deploy the contract
 
