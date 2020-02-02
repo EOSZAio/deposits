@@ -223,9 +223,17 @@ cleos push action ${COOL} transfer '[ "'${TESTUSER1}'", "'${DEPOSITS}'", "75.000
 echo -e "${GREEN}This should fail, ${FAKECOOL} not whitelisted${NC}"
 cleos push action ${FAKECOOL} transfer '[ "'${TESTUSER1}'", "'${DEPOSITS}'", "15.0000 COOL", "1234567890" ]' -p ${TESTUSER1}@active
 
+echo
+echo -e "${CYAN}-----------------------WHITELISTED TOKENS------------------------${NC}"
 cleos get table deposits deposits whitelists
+echo
+echo -e "${CYAN}--------------------------TLOS DEPOSITS--------------------------${NC}"
 cleos get table deposits TLOS deposits
+echo
+echo -e "${CYAN}--------------------------COOL DEPOSITS--------------------------${NC}"
 cleos get table deposits COOL deposits
+echo
+echo -e "${CYAN}-----------------------------------------------------------------${NC}"
 
 cleos push action ${DEPOSITS} cleardeposit '[ "TLOS", 1 ]' -p ${DEPOSITS}@active
 
@@ -235,10 +243,17 @@ cleos push action ${DEPOSITS} cleardeposit '[ "COOL", 1 ]' -p ${DEPOSITS}@active
 cleos push action ${DEPOSITS} refund '[ "COOL", 2 ]' -p ${DEPOSITS}@active
 cleos push action ${DEPOSITS} removewlist '[ "COOL" ]' -p ${DEPOSITS}@active
 
+echo
+echo -e "${CYAN}-----------------------WHITELISTED TOKENS------------------------${NC}"
 cleos get table deposits deposits whitelists
+echo
+echo -e "${CYAN}--------------------------TLOS DEPOSITS--------------------------${NC}"
 cleos get table deposits TLOS deposits
+echo
+echo -e "${CYAN}--------------------------COOL DEPOSITS--------------------------${NC}"
 cleos get table deposits COOL deposits
-
+echo
+echo -e "${CYAN}-----------------------------------------------------------------${NC}"
 
 # for i in {1..3}
 # do
