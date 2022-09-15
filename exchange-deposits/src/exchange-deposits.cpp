@@ -90,7 +90,7 @@ void exchange::cleardeposit ( const symbol_code& symbol, const uint64_t& deposit
 /*
  * this action refunds a deposit to the sender
  */
-void exchange::refund ( const symbol_code& symbol, const uint64_t& deposit_id )
+void exchange::refund ( const symbol_code& symbol, const uint64_t& deposit_id, const std::string& memo )
 {
     require_auth( get_self() );
 
@@ -99,15 +99,14 @@ void exchange::refund ( const symbol_code& symbol, const uint64_t& deposit_id )
     auto existing = deposits_table.find( deposit_id );
     check( existing != deposits_table.end(), "deposit id not found" );
     const auto &it = *existing;
-
-    print(it.quantity);
+    string memo_str = (memo.length() == 0) ? it.memo : memo;
 
     whitelists whitelist_table( get_self(), get_self().value );
     auto wl = whitelist_table.get( it.quantity.symbol.code().raw(), "token not whitelisted" );
 
     action(permission_level{ get_self(), "active"_n },
            wl.contract, "transfer"_n,
-           std::make_tuple(get_self(), it.from, it.quantity, string("refund deposit"))).send();
+           std::make_tuple( get_self(), it.from, it.quantity, memo_str )).send();
 
     deposits_table.erase( it );
 }
@@ -190,6 +189,10 @@ void exchange::on_transfer( const name& from,
     if ( has_auth(get_self()) || from == get_self() || from == "eosio.ram"_n || from == "eosio.stake"_n || from == "eosio.rex"_n )
         return;
 
+//    auto _token = _tokens_table.get( quantity.symbol.code().raw(), "token not found" );
+//    check(get_first_receiver() == _token.token_info.get_contract(),"incorrect token contract");
+
+    check( to == get_self(), "contract not involved in transfer" );
     check( quantity.symbol.is_valid(), "invalid quantity in transfer" );
     check( quantity.amount > 0, "quantity must be greater than 0" );
     check( memo.size() <= 256, "memo has more than 256 bytes" );
@@ -205,7 +208,6 @@ void exchange::on_transfer( const name& from,
         deposit.from = from;
         deposit.quantity = quantity;
         deposit.memo = memo;
-        deposit.block_num = tapos_block_num(); // https://eosio.stackexchange.com/questions/728/how-to-get-current-block-number-in-smart-contract
         deposit.trxid = get_trx_id();
     });
 }

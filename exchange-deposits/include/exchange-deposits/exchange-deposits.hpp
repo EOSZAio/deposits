@@ -62,7 +62,10 @@ namespace eosio {
          * @param deposit_id
          */
         [[eosio::action]]
-        void refund (const symbol_code& symbol, const uint64_t& deposit_id );
+        void refund ( const symbol_code& symbol,
+                      const uint64_t& deposit_id,
+                      const std::string& memo );
+
 
         /**
          * @brief intercepts transfers
@@ -92,7 +95,6 @@ namespace eosio {
             name from;
             asset quantity;
             string memo;
-            uint64_t block_num;
             checksum256 trxid;
 
             uint64_t primary_key()const { return deposit_id; }

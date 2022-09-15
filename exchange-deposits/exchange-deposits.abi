@@ -56,10 +56,6 @@
                     "type": "string"
                 },
                 {
-                    "name": "block_num",
-                    "type": "uint64"
-                },
-                {
                     "name": "trxid",
                     "type": "checksum256"
                 }
@@ -76,6 +72,10 @@
                 {
                     "name": "deposit_id",
                     "type": "uint64"
+                },
+                {
+                    "name": "memo",
+                    "type": "string"
                 }
             ]
         },
